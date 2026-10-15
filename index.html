@@ -1,0 +1,493 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><style><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaivalya's Gaming</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#07070d;
+  color:white;
+}
+
+header{
+  background:linear-gradient(135deg,#11111f,#17172b);
+  padding:25px 15px;
+  text-align:center;
+  border-bottom:2px solid #7c3cff;
+  box-shadow:0 0 25px #7c3cff55;
+}
+
+.logo{
+  font-size:38px;
+  font-weight:bold;
+  color:#9b5cff;
+  text-shadow:0 0 15px #8b3dff;
+}
+
+.tagline{
+  margin-top:8px;
+  color:#bbb;
+}
+
+.search-box{
+  margin:22px auto 5px;
+  max-width:600px;
+}
+
+.search-box input{
+  width:100%;
+  padding:15px 20px;
+  border-radius:30px;
+  border:2px solid #7c3cff;
+  background:#080812;
+  color:white;
+  font-size:16px;
+  outline:none;
+}
+
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:20px 15px;
+  justify-content:center;
+}
+
+.categories button{
+  flex-shrink:0;
+  padding:10px 18px;
+  border:none;
+  border-radius:20px;
+  background:#171722;
+  color:white;
+  cursor:pointer;
+  border:1px solid #444;
+}
+
+.categories button:hover,
+.categories button.active{
+  background:#7c3cff;
+  box-shadow:0 0 15px #7c3cff;
+}
+
+.hero{
+  margin:20px auto;
+  max-width:1200px;
+  padding:45px 20px;
+  text-align:center;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at center,#4b1680,#0a0a12 65%);
+}
+
+.hero h1{
+  font-size:45px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#ccc;
+  font-size:18px;
+}
+
+.games-title{
+  text-align:center;
+  margin:35px 0 20px;
+  font-size:30px;
+}
+
+.games{
+  max-width:1200px;
+  margin:auto;
+  padding:15px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+
+.card{
+  background:#11111b;
+  border:1px solid #29293a;
+  border-radius:16px;
+  overflow:hidden;
+  transition:.25s;
+  box-shadow:0 5px 20px #000;
+}
+
+.card:hover{
+  transform:translateY(-7px);
+  border-color:#8b45ff;
+  box-shadow:0 0 25px #7c3cff66;
+}
+
+.game-img{
+  height:135px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:52px;
+  background:linear-gradient(135deg,#21114a,#0d0d18);
+}
+
+.card-content{
+  padding:15px;
+}
+
+.card h3{
+  font-size:18px;
+  margin-bottom:7px;
+}
+
+.category{
+  color:#a979ff;
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.play{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#7c3cff;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.play:hover{
+  background:#9b5cff;
+}
+
+.no-results{
+  text-align:center;
+  padding:50px;
+  color:#aaa;
+  display:none;
+}
+
+footer{
+  margin-top:50px;
+  padding:30px;
+  text-align:center;
+  background:#0e0e16;
+  border-top:1px solid #29293a;
+  color:#aaa;
+}
+
+@media(max-width:600px){
+  .logo{font-size:30px;}
+  .hero h1{font-size:32px;}
+  .hero{margin:10px;}
+  .games{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .game-img{height:105px;font-size:40px;}
+  .card-content{padding:10px;}
+  .card h3{font-size:15px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🎮 KAIVALYA'S GAMING</div>
+  <div class="tagline">Your Ultimate Gaming Zone 🔥</div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      id="search"
+      placeholder="🔍 Search 300+ games..."
+      onkeyup="searchGames()"
+    >
+  </div>
+</header>
+
+<div class="categories">
+  <button class="active" onclick="filterGames('All',this)">All</button>
+  <button onclick="filterGames('Horror',this)">👻 Horror</button>
+  <button onclick="filterGames('Action',this)">🔫 Action</button>
+  <button onclick="filterGames('Racing',this)">🏎️ Racing</button>
+  <button onclick="filterGames('Adventure',this)">🗺️ Adventure</button>
+  <button onclick="filterGames('Puzzle',this)">🧩 Puzzle</button>
+  <button onclick="filterGames('Sports',this)">⚽ Sports</button>
+  <button onclick="filterGames('Survival',this)">🧟 Survival</button>
+</div>
+
+<section class="hero">
+  <h1>WELCOME TO KAIVALYA'S GAMING 🎮</h1>
+  <p>Discover 300+ exciting games across multiple categories.</p>
+</section>
+
+<h2 class="games-title">🔥 Game Collection</h2>
+
+<div id="games" class="games"></div>
+
+<div id="noResults" class="no-results">
+  😔 No games found.
+</div>
+
+<footer>
+  <h3>🎮 Kaivalya's Gaming</h3>
+  <p>Play • Explore • Have Fun</p>
+  <p>© 2026 Kaivalya's Gaming</p>
+</footer>
+
+<script>
+
+const gameNames = [
+
+/* HORROR */
+"Nightmare House","Dark Forest","Haunted School","Ghost Mansion",
+"Dead Night","The Haunted Room","Scary Hospital","Evil Doll",
+"Ghost Town","Midnight Terror","Cursed House","Shadow Horror",
+"Haunted Hotel","The Last Survivor","Dark Basement","Creepy Woods",
+"Silent Nightmare","Ghost Hunter","Zombie Night","Blood Moon",
+"Haunted Village","Demon House","Scary Maze","The Forgotten",
+"Night Visitor","Dark Corridor","Possessed","Fear Factory",
+"Ghost Escape","Horror Night",
+
+/* ACTION */
+"Warrior Strike","Cyber Soldier","Ninja Attack","Battle Force",
+"Street Fighter","Space Warrior","Alien Attack","Robot Battle",
+"Super Fighter","Shadow Ninja","War Zone","Army Assault",
+"Laser Combat","Battle Arena","Hero Strike","Monster Attack",
+"Cyber Battle","Rocket Warrior","Dragon Fighter","Action Hero",
+"Desert Combat","City Battle","Future Soldier","Tank Attack",
+"Power Warrior","Steel Fighter","Ultimate Battle","Fire Warrior",
+"Battle Legends","Hero Combat",
+
+/* RACING */
+"Turbo Racer","Street Racing","Speed King","Nitro Drive",
+"City Racer","Desert Rally","Super Cars","Drift Master",
+"Highway Racer","Extreme Racing","Formula Speed","Bike Rush",
+"Monster Truck","Offroad King","Racing Legends","Fast Driver",
+"Night Racing","Speed Challenge","Drag Racer","Traffic Racer",
+"Mountain Drive","Snow Racing","Beach Racing","Future Racer",
+"Cyber Cars","Rocket Racing","Grand Driver","Drift Legends",
+"Speed Warriors","Ultimate Racer",
+
+/* ADVENTURE */
+"Lost Island","Jungle Quest","Treasure Hunt","Mystery Island",
+"Dragon Quest","Ancient World","Pirate Adventure","Castle Quest",
+"Space Explorer","Desert Adventure","Mountain Quest","Secret Temple",
+"Magic Forest","Island Explorer","Cave Adventure","Hero Journey",
+"Lost Kingdom","Sky Adventure","Ocean Quest","Wild Explorer",
+"Dragon Island","Ancient Temple","Hidden Treasure","Mystery Castle",
+"Adventure World","Forest Hero","Galaxy Quest","Pirate Island",
+"Magic Kingdom","Ultimate Adventure",
+
+/* PUZZLE */
+"Brain Puzzle","Block Master","Number Puzzle","Color Match",
+"Gem Puzzle","Maze Master","Logic Challenge","Word Puzzle",
+"Memory Game","Tile Match","Shape Puzzle","Brain Test",
+"Math Challenge","Jewel Quest","Box Puzzle","Puzzle World",
+"Escape Puzzle","Sliding Blocks","2048 Challenge","Sudoku Master",
+"Pattern Match","Brain Master","Color Puzzle","Mystery Puzzle",
+"Logic World","Smart Blocks","Number Master","Puzzle Quest",
+"Brain Battle","Ultimate Puzzle",
+
+/* SPORTS */
+"Football Star","Cricket Champion","Basketball Hero","Tennis Pro",
+"Boxing Champion","Golf Master","Hockey Star","Baseball Hero",
+"Volleyball Pro","Wrestling King","Skateboard Rush","Table Tennis",
+"Soccer Legends","Cricket World","Basketball Stars","Tennis Master",
+"Football League","Boxing Arena","Golf Challenge","Hockey League",
+"Baseball Stars","Sports King","Soccer Hero","Cricket Battle",
+"Basketball League","Tennis Battle","Football Challenge","Sports Arena",
+"Champion League","Ultimate Sports",
+
+/* SURVIVAL */
+"Zombie Survival","Island Survival","Forest Survivor","Night Survivor",
+"Apocalypse World","Zombie Island","Last Survivor","Wild Survival",
+"Desert Survivor","Snow Survival","Ocean Survival","Dinosaur Survival",
+"Monster Island","Alien Survival","Jungle Survivor","Dark Survival",
+"Lost Survivor","Survival Camp","Zombie Escape","Wilderness",
+"Survival Quest","Danger Island","Dead World","Survivor Hero",
+"Zombie World","Extreme Survival","Battle Survival","Survival Land",
+"Final Survivor","Ultimate Survival",
+
+/* EXTRA GAMES */
+"Pixel Warrior","Space Racing","Galaxy Fighter","Mega Adventure",
+"Super Puzzle","Monster Racing","Dragon Battle","Cyber Racing",
+"Ghost Runner","Ninja Runner","Robot Runner","Alien Runner",
+"Super Jump","Mega Shooter","Sky Fighter","Ocean Racer",
+"Fire Runner","Ice Warrior","Thunder Battle","Lightning Racer",
+"Magic Fighter","Dragon Runner","Shadow Runner","Cyber Ninja",
+"Future Battle","Galaxy Warrior","Space Shooter","Rocket Fighter",
+"Cosmic Racing","Star Adventure",
+
+"Dark Warrior","Monster Hunter","Zombie Hunter","Ghost Runner 2",
+"Night Racer","Turbo Bike","Extreme Bike","Super Bike",
+"Mountain Racer","City Driver","Highway King","Speed Runner",
+"Jungle Runner","Temple Runner X","Castle Warrior","Dragon Warrior",
+"Magic Warrior","Legend Fighter","Ultimate Hero","Super Hero",
+"Power Hero","Shadow Hero","Cyber Hero","Galaxy Hero",
+"Space Hero","Robot Hero","Alien Hero","Monster Hero",
+"Dark Hero","Final Hero",
+
+"Brain Master 2","Puzzle King","Maze Runner","Color King",
+"Number King","Logic Master","Memory Master","Block Puzzle",
+"Jewel Master","Shape Master","Word Master","Math Master",
+"Football King","Cricket King","Basketball King","Tennis King",
+"Boxing King","Golf King","Hockey King","Racing King",
+"Action King","Adventure King","Horror King","Survival King",
+"Gaming Legend","Mega Gamer","Ultimate Gamer","Pro Gamer",
+"Kaivalya Challenge","Kaivalya Adventure"
+];
+
+/* CATEGORY ASSIGNMENT */
+
+const categories = [
+"Horror","Action","Racing","Adventure",
+"Puzzle","Sports","Survival"
+];
+
+const icons = {
+  Horror:"👻",
+  Action:"⚔️",
+  Racing:"🏎️",
+  Adventure:"🗺️",
+  Puzzle:"🧩",
+  Sports:"🏆",
+  Survival:"🧟"
+};
+
+let games = [];
+
+gameNames.forEach((name,index)=>{
+
+  let category = categories[index % categories.length];
+
+  games.push({
+    name:name,
+    category:category,
+    icon:icons[category]
+  });
+
+});
+
+/* Make sure collection has 300+ cards */
+
+while(games.length < 320){
+
+  let number = games.length + 1;
+
+  let category = categories[games.length % categories.length];
+
+  games.push({
+    name:"Kaivalya Game "+number,
+    category:category,
+    icon:icons[category]
+  });
+
+}
+
+function displayGames(list){
+
+  const container = document.getElementById("games");
+  const noResults = document.getElementById("noResults");
+
+  container.innerHTML="";
+
+  if(list.length===0){
+    noResults.style.display="block";
+    return;
+  }
+
+  noResults.style.display="none";
+
+  list.forEach(game=>{
+
+    const card=document.createElement("div");
+
+    card.className="card";
+
+    card.innerHTML=`
+
+      <div class="game-img">
+        ${game.icon}
+      </div>
+
+      <div class="card-content">
+
+        <h3>${game.name}</h3>
+
+        <div class="category">
+          ${game.category}
+        </div>
+
+        <button class="play"
+          onclick="playGame('${game.name}')">
+          ▶ PLAY
+        </button>
+
+      </div>
+
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+function playGame(name){
+
+  alert(
+    "🎮 "+name+
+    "\\n\\nThis game is ready to be connected to its playable game page!"
+  );
+
+}
+
+function filterGames(category,button){
+
+  document.querySelectorAll(".categories button")
+    .forEach(btn=>btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  if(category==="All"){
+    displayGames(games);
+  }else{
+    displayGames(
+      games.filter(game=>game.category===category)
+    );
+  }
+
+}
+
+function searchGames(){
+
+  const query=document
+    .getElementById("search")
+    .value
+    .toLowerCase();
+
+  const results=games.filter(game=>
+    game.name.toLowerCase().includes(query) ||
+    game.category.toLowerCase().includes(query)
+  );
+
+  displayGames(results);
+
+}
+
+/* INITIAL LOAD */
+
+displayGames(games);
+
+</script>
+
+</body>
+</html></style>
